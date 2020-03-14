@@ -1,0 +1,7 @@
+[package]
+name = "ezcli"
+version = "0.1.0"
+authors = ["Alexander Johnston <Aliics@hotmail.com>"]
+edition = "2018"
+categories = ["cli", "Command Line"]
+repository = "https://github.com/Aliics/ezcli"
