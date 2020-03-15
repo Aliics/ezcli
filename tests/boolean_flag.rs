@@ -1,4 +1,4 @@
-use ezcli::{flag, name::NameBuilder, named_flag};
+use ezcli::{flag, name::Name, named_flag};
 
 #[test]
 fn should_enable_boolean_flag_when_arg_given() {
@@ -20,16 +20,8 @@ fn should_not_enable_flag_when_no_arg_given() {
 fn should_enable_named_flag_when_arg_given_with_long_and_short_name() {
     let args = ["--long-named-arg", "-s"];
 
-    named_flag!(
-        long_named_boolean,
-        NameBuilder::new().long("long-named-arg").build(),
-        args
-    );
-    named_flag!(
-        short_named_boolean,
-        NameBuilder::new().short("s").build(),
-        args
-    );
+    named_flag!(long_named_boolean, Name::long("long-named-arg"), args);
+    named_flag!(short_named_boolean, Name::short("s"), args);
 
     assert!(long_named_boolean);
     assert!(short_named_boolean);
@@ -39,11 +31,7 @@ fn should_enable_named_flag_when_arg_given_with_long_and_short_name() {
 fn should_enable_flag_of_long_and_short_named_arg() {
     let args = ["--both-named-arg", "-b"];
 
-    named_flag!(
-        both_named_boolean,
-        NameBuilder::of_long_and_short("both-named-arg", "b").build(),
-        args
-    );
+    named_flag!(both_named_boolean, Name::new("both-named-arg", "b"), args);
 
     assert!(both_named_boolean);
 }

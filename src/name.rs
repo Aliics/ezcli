@@ -3,32 +3,26 @@ pub struct Name {
     pub short: Option<String>,
 }
 
-pub struct NameBuilder(Name);
+impl Name {
+    pub fn new(long: &str, short: &str) -> Self {
+        Self {
+            long: Some(long.to_string()),
+            short: Some(short.to_string()),
+        }
+    }
 
-impl NameBuilder {
-    pub fn new() -> Self {
-        Self(Name {
-            long: None,
+    pub fn long(name: &str) -> Self {
+        Self {
+            long: Some(name.to_string()),
             short: None,
-        })
+        }
     }
 
-    pub fn of_long_and_short(long: &str, short: &str) -> Self {
-        NameBuilder::new().long(long).short(short)
-    }
-
-    pub fn long(mut self, name: &str) -> Self {
-        self.0.long = Some(name.to_string());
-        self
-    }
-
-    pub fn short(mut self, name: &str) -> Self {
-        self.0.short = Some(name.to_string());
-        self
-    }
-
-    pub fn build(self) -> Name {
-        self.0
+    pub fn short(name: &str) -> Self {
+        Self {
+            long: None,
+            short: Some(name.to_string()),
+        }
     }
 }
 
