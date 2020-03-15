@@ -41,7 +41,7 @@ fn should_enable_flag_of_long_and_short_named_arg() {
 
     named_flag!(
         both_named_boolean,
-        NameBuilder::new().long("both-named-arg").short("b").build(),
+        NameBuilder::of_long_and_short("both-named-arg", "b").build(),
         args
     );
 
