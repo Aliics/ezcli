@@ -29,19 +29,29 @@ impl Name {
 #[macro_export]
 macro_rules! named_flag {
     ($name:tt, $named:expr, $args:ident) => {
-        let $name = $args
-            .iter()
-            .find(|s| {
-                if $named.long.is_some() {
-                    return **s == format!("--{}", $named.long.unwrap());
-                }
-
-                if $named.short.is_some() {
-                    return **s == format!("-{}", $named.short.unwrap());
-                }
-
-                false
-            })
-            .is_some();
+        let $name = $crate::name::_named_flag($named, &mut $args);
     };
+    ($name:tt, $named:expr) => {
+        let $name = {
+            let mut args = std::env::args().collect::<Vec<String>>();
+            let mut args_str = args.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
+            $crate::name::_named_flag($named, args_str.as_slice())
+        };
+    };
+}
+
+pub fn _named_flag(name: Name, args: &[&str]) -> bool {
+    args.iter()
+        .find(|s| {
+            if name.long.is_some() {
+                return **s == format!("--{}", name.long.clone().unwrap());
+            }
+
+            if name.short.is_some() {
+                return **s == format!("-{}", name.short.clone().unwrap());
+            }
+
+            false
+        })
+        .is_some()
 }
