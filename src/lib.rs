@@ -54,7 +54,7 @@ macro_rules! flag {
 /// use ezcli::option;
 ///
 /// let args = ["--my_option", "value"];
-/// flag!(my_option, args);
+/// option!(my_option, args);
 /// ```
 #[macro_export]
 macro_rules! option {
