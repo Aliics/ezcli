@@ -1,21 +1,27 @@
+pub mod name;
+
 /// Command line argument flag for on/off state.
 ///
-/// Uses `std::env:args()` to determine the arguments
-/// passed to the program. If there is an argument matching
-/// the flag's name then this variable will be truthy.
+/// Uses `std::env:args()` to determine the arguments passed to the program.
+/// If there is an argument matching the flag's name then this variable will be
+/// truthy.
 /// ```
 /// use ezcli::flag;
 ///
 /// flag!(my_boolean);
 /// ```
-/// In some case of not wanting to use the program's environment
-/// arguments using a slice is also possible.
+/// In some case of not wanting to use the program's environment arguments
+/// using a slice is also possible.
 /// ```
 /// use ezcli::flag;
 ///
 /// let args = ["--my_boolean"];
 /// flag!(my_boolean, args);
 /// ```
+/// If the command line argument name should be different to the variable name
+/// then use [`named_flag`].
+///
+/// [`named_flag`]: ./macro.named_flag.html
 #[macro_export]
 macro_rules! flag {
     ($name:tt, $args:ident) => {
@@ -34,16 +40,16 @@ macro_rules! flag {
 
 /// Optional command line argument with associated value.
 ///
-/// When provided via command line it will return `Some` wrapping
-/// the value passed along with it. `None` will be returned when
-/// the option is not provided or does not follow syntax.
+/// When provided via command line it will return `Some` wrapping the value
+/// passed along with it. `None` will be returned when the option is not
+/// provided or does not follow syntax.
 /// ```
 /// use ezcli::option;
 ///
 /// option!(my_option);
 /// ```
-/// In some case of not wanting to use the program's environment
-/// arguments using a slice is also possible.
+/// In some case of not wanting to use the program's environment arguments
+/// using a slice is also possible.
 /// ```
 /// use ezcli::option;
 ///
