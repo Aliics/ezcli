@@ -8,3 +8,4 @@ keywords = ["cli", "argument", "arg"]
 categories = ["Command-line-interface"]
 description = "Easy CLI crate for Rust"
 readme = "README.md"
+license = "MIT OR Apache-2.0" # I don't know anything about licenses... help.
