@@ -11,3 +11,14 @@ use ezcli::flag;
 
 flag!(my_boolean); // my_boolean is true if program args contain --my_boolean
 ```
+
+# option
+Command line argument for an optional parameter. Using the `option` macro you pass
+a variable name in making it available to that scope. Takes the value provided to
+it from the CLI if available. When available it will be a `Some` wrapping that value and
+when not, it'll be `None`.
+```rust
+use ezcli::option;
+
+option!(my_arg); // my_arg is Some(x) if given --my_arg x, otherwise None 
+```
