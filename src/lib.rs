@@ -1,3 +1,5 @@
+pub mod name;
+
 /// Command line argument flag for on/off state.
 ///
 /// Uses `std::env:args()` to determine the arguments
