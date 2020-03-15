@@ -31,3 +31,24 @@ macro_rules! flag {
             .is_some();
     };
 }
+
+#[macro_export]
+macro_rules! optional_arg {
+    ($name:tt, $args:ident) => {
+        let $name: Option<&str> = {
+            let mut i = 0;
+            let mut optional = None;
+            let wanted_arg = format!("--{}", stringify!(my_arg));
+            while (i < $args.len()) {
+                if $args[i] == wanted_arg && $args.len() > i + 1 {
+                    optional = Some($args[i + 1]);
+                    break;
+                }
+
+                i += 1;
+            }
+
+            optional
+        };
+    };
+}
