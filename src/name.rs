@@ -82,6 +82,23 @@ macro_rules! named_flag {
     };
 }
 
+#[macro_export]
+macro_rules! named_option {
+    ($name:tt, $named:expr, $args:ident) => {
+        let $name = {
+            let mut args: Vec<String> = $args.iter().map(|s| s.to_string()).collect();
+            $crate::name::_named_option($named, args.as_slice())
+        };
+    };
+
+    ($name:tt, $named:expr) => {
+        let $name = {
+            let args: Vec<String> = std::env::args().collect();
+            $crate::name::_named_option($named, args.as_slice())
+        };
+    };
+}
+
 pub fn _named_flag(name: Name, args: &[&str]) -> bool {
     args.iter()
         .find(|s| {
@@ -96,4 +113,18 @@ pub fn _named_flag(name: Name, args: &[&str]) -> bool {
             false
         })
         .is_some()
+}
+
+pub fn _named_option(name: Name, args: &[String]) -> Option<String> {
+    let mut optional = None;
+    let wanted_long = format!("--{}", name.long.unwrap_or_default());
+    let wanted_short = format!("-{}", name.short.unwrap_or_default());
+    for i in 0..args.len() {
+        if (args[i] == wanted_long || args[i] == wanted_short) && args.len() > i + 1 {
+            optional = Some(args[i + 1].clone());
+            break;
+        }
+    }
+
+    optional
 }
