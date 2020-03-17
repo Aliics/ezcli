@@ -93,14 +93,14 @@ macro_rules! named_flag {
 /// option, the created variable is `None`, otherwise it is equal to the
 /// value wrapped in `Some`.
 /// ```
-/// use ezcli::option;
+/// use ezcli::{named_option, name::Name};
 ///
 /// named_option!(my_option, Name::long("amazing-option"));
 /// ```
 /// In some case of not wanting to use the program's environment arguments
 /// using a slice is also possible.
 /// ```
-/// use ezcli::option;
+/// use ezcli::{named_option, name::Name};
 ///
 /// let args = ["-s", "value"];
 /// named_option!(my_option, Name::new("accepts-both", "s"), args);
