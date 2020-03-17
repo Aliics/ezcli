@@ -28,7 +28,7 @@ use ezcli::option;
 
 option!(my_arg);
 
-match my_arg.unwrap() {
+match my_arg {
     Some(x) => {}, // use x
     None => {}, // handle no value
 }
