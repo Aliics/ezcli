@@ -75,12 +75,12 @@ impl Name {
 #[macro_export]
 macro_rules! named_flag {
     ($name:tt, $named:expr, $args:ident) => {
-        let mut args: Vec<String> = $args.iter().map(|s| s.to_string()).collect();
+        let args: Vec<String> = $args.iter().map(|s| s.to_string()).collect();
         let $name = $crate::name::_named_flag($named, args.as_slice());
     };
     ($name:tt, $named:expr) => {
         let $name = {
-            let mut args: Vec<String> = std::env::args().collect();
+            let args: Vec<String> = std::env::args().collect();
             $crate::name::_named_flag($named, args.as_slice())
         };
     };
