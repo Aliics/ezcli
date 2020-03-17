@@ -1,6 +1,6 @@
 # ezcli
-Small and lightweight to be in any command line application, without having to worry
-about a lot of extra nonsense. I intend for this to be designed with simplicity in mind.
+Small and lightweight enough to be put into any CLI application quickly with no fuss.
+Just call a macro or two and it's up and running!
 
 If you do want a more fleshed out CLI crate, you should check out 
 [clap](https://crates.io/crates/clap).
