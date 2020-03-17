@@ -14,6 +14,8 @@ pub struct Name {
 impl Name {
     /// Create a [`Name`] with a long and a short name as the parameters.
     ///
+    /// **Accepts**: --long-name *or* -s
+    ///
     /// [`Name`]: ./struct.Name.html
     pub fn new(long: &str, short: &str) -> Self {
         Self {
@@ -24,6 +26,8 @@ impl Name {
 
     /// Create a [`Name`] with just a long name.
     ///
+    /// **Accepts:** --long-name
+    ///
     /// [`Name`]: ./struct.Name.html
     pub fn long(name: &str) -> Self {
         Self {
@@ -33,6 +37,8 @@ impl Name {
     }
 
     /// Create a [`Name`] with just a short name.
+    ///
+    /// **Accepts:** -s
     ///
     /// [`Name`]: ./struct.Name.html
     pub fn short(name: &str) -> Self {
@@ -59,10 +65,8 @@ impl Name {
 /// ```
 /// use ezcli::{named_flag, name::Name};
 ///
-/// let mut args = ["f"];
+/// let args = ["f"];
 ///
-/// // Macros creates variable called flag.
-/// // Accepts -f as a short argument.
 /// named_flag!(flag, Name::short("f"));
 /// ```
 ///
@@ -71,18 +75,54 @@ impl Name {
 #[macro_export]
 macro_rules! named_flag {
     ($name:tt, $named:expr, $args:ident) => {
-        let $name = $crate::name::_named_flag($named, &mut $args);
+        let args: Vec<String> = $args.iter().map(|s| s.to_string()).collect();
+        let $name = $crate::name::_named_flag($named, args.as_slice());
     };
     ($name:tt, $named:expr) => {
         let $name = {
-            let mut args = std::env::args().collect::<Vec<String>>();
-            let mut args_str = args.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
-            $crate::name::_named_flag($named, args_str.as_slice())
+            let args: Vec<String> = std::env::args().collect();
+            $crate::name::_named_flag($named, args.as_slice())
         };
     };
 }
 
-pub fn _named_flag(name: Name, args: &[&str]) -> bool {
+/// Named optional command line argument with associated value.
+///
+/// Functionally identical to [`option`] but accepts a [`Name`] to allow for
+/// more robust CLI naming options. If there is no provided value with the
+/// option, the created variable is `None`, otherwise it is equal to the
+/// value wrapped in `Some`.
+/// ```
+/// use ezcli::{named_option, name::Name};
+///
+/// named_option!(my_option, Name::long("amazing-option"));
+/// ```
+/// In some case of not wanting to use the program's environment arguments
+/// using a slice is also possible.
+/// ```
+/// use ezcli::{named_option, name::Name};
+///
+/// let args = ["-s", "value"];
+/// named_option!(my_option, Name::new("accepts-both", "s"), args);
+/// ```
+#[macro_export]
+macro_rules! named_option {
+    ($name:tt, $named:expr, $args:ident) => {
+        let $name = {
+            let args: Vec<String> = $args.iter().map(|s| s.to_string()).collect();
+            $crate::name::_named_option($named, args.as_slice())
+        };
+    };
+
+    ($name:tt, $named:expr) => {
+        let $name = {
+            let args: Vec<String> = std::env::args().collect();
+            $crate::name::_named_option($named, args.as_slice())
+        };
+    };
+}
+
+pub fn _named_flag(name: Name, args: &[String]) -> bool {
     args.iter()
         .find(|s| {
             if name.long.is_some() {
@@ -96,4 +136,18 @@ pub fn _named_flag(name: Name, args: &[&str]) -> bool {
             false
         })
         .is_some()
+}
+
+pub fn _named_option(name: Name, args: &[String]) -> Option<String> {
+    let mut optional = None;
+    let wanted_long = format!("--{}", name.long.unwrap_or_default());
+    let wanted_short = format!("-{}", name.short.unwrap_or_default());
+    for i in 0..args.len() {
+        if (args[i] == wanted_long || args[i] == wanted_short) && args.len() > i + 1 {
+            optional = Some(args[i + 1].clone());
+            break;
+        }
+    }
+
+    optional
 }
