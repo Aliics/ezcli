@@ -84,8 +84,8 @@ macro_rules! named_flag {
 ///
 /// Functionally identical to [`option`] but accepts a [`Name`] to allow for
 /// more robust CLI naming options. If there is no provided value with the
-/// option it returns `None`, otherwise it returns the value wrapped in
-/// `Some`.
+/// option, the created variable is `None`, otherwise it is equal to the
+/// value wrapped in `Some`.
 /// ```
 /// use ezcli::option;
 ///
