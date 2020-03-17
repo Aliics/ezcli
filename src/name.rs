@@ -61,8 +61,6 @@ impl Name {
 ///
 /// let args = ["f"];
 ///
-/// // Macros creates variable called flag.
-/// // Accepts -f as a short argument.
 /// named_flag!(flag, Name::short("f"));
 /// ```
 ///
@@ -82,6 +80,25 @@ macro_rules! named_flag {
     };
 }
 
+/// Named optional command line argument with associated value.
+///
+/// Functionally identical to [`option`] but accepts a [`Name`] to allow for
+/// more robust CLI naming options. If there is no provided value with the
+/// option it returns `None`, otherwise it returns the value wrapped in
+/// `Some`.
+/// ```
+/// use ezcli::option;
+///
+/// named_option!(my_option, Name::long("amazing-option"));
+/// ```
+/// In some case of not wanting to use the program's environment arguments
+/// using a slice is also possible.
+/// ```
+/// use ezcli::option;
+///
+/// let args = ["-s", "value"];
+/// named_option!(my_option, Name::new("accepts-both", "s"), args);
+/// ```
 #[macro_export]
 macro_rules! named_option {
     ($name:tt, $named:expr, $args:ident) => {

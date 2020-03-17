@@ -35,3 +35,14 @@ use ezcli::{named_flag, name::Name};
 // my_boolean is available to the program but accepts "-b" or "--my-boolean" 
 named_flag!(my_boolean, Name::new("my-boolean", "b"));
 ```
+
+# named_option
+Command line argument for a named optional parameter. Using `named_option` macro you
+pass in a variable, which will be created, and a `Name` struct that defines the long
+and short naming. Takes the value provided to it from the CLI if available. When 
+available it will be a `Some` wrapping that value and when not, it'll be `None`.
+```rust
+use ezcli::{named_option, name::Name};
+
+named_option!(my_option, Name::new("my-option", "o"));
+```
