@@ -59,7 +59,7 @@ impl Name {
 /// ```
 /// use ezcli::{named_flag, name::Name};
 ///
-/// let mut args = ["f"];
+/// let args = ["f"];
 ///
 /// // Macros creates variable called flag.
 /// // Accepts -f as a short argument.
@@ -71,13 +71,13 @@ impl Name {
 #[macro_export]
 macro_rules! named_flag {
     ($name:tt, $named:expr, $args:ident) => {
-        let $name = $crate::name::_named_flag($named, &mut $args);
+        let mut args: Vec<String> = $args.iter().map(|s| s.to_string()).collect();
+        let $name = $crate::name::_named_flag($named, args.as_slice());
     };
     ($name:tt, $named:expr) => {
         let $name = {
-            let mut args = std::env::args().collect::<Vec<String>>();
-            let mut args_str = args.iter().map(|s| s.as_str()).collect::<Vec<&str>>();
-            $crate::name::_named_flag($named, args_str.as_slice())
+            let mut args: Vec<String> = std::env::args().collect();
+            $crate::name::_named_flag($named, args.as_slice())
         };
     };
 }
@@ -86,7 +86,7 @@ macro_rules! named_flag {
 macro_rules! named_option {
     ($name:tt, $named:expr, $args:ident) => {
         let $name = {
-            let mut args: Vec<String> = $args.iter().map(|s| s.to_string()).collect();
+            let args: Vec<String> = $args.iter().map(|s| s.to_string()).collect();
             $crate::name::_named_option($named, args.as_slice())
         };
     };
@@ -99,7 +99,7 @@ macro_rules! named_option {
     };
 }
 
-pub fn _named_flag(name: Name, args: &[&str]) -> bool {
+pub fn _named_flag(name: Name, args: &[String]) -> bool {
     args.iter()
         .find(|s| {
             if name.long.is_some() {
