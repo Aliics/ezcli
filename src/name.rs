@@ -14,6 +14,8 @@ pub struct Name {
 impl Name {
     /// Create a [`Name`] with a long and a short name as the parameters.
     ///
+    /// **Accepts**: --long-name *or* -s
+    ///
     /// [`Name`]: ./struct.Name.html
     pub fn new(long: &str, short: &str) -> Self {
         Self {
@@ -24,6 +26,8 @@ impl Name {
 
     /// Create a [`Name`] with just a long name.
     ///
+    /// **Accepts:** --long-name
+    ///
     /// [`Name`]: ./struct.Name.html
     pub fn long(name: &str) -> Self {
         Self {
@@ -33,6 +37,8 @@ impl Name {
     }
 
     /// Create a [`Name`] with just a short name.
+    ///
+    /// **Accepts:** -s
     ///
     /// [`Name`]: ./struct.Name.html
     pub fn short(name: &str) -> Self {
