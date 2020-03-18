@@ -1,8 +1,8 @@
-name: Cargo Test
+name: Cargo Upload to Crates.io
 
 on:
   push:
-    branches-ignore:
+    branches:
       - master
 
 jobs:
@@ -18,3 +18,11 @@ jobs:
       - uses: actions-rs/cargo@v1
         with:
           command: test
+  publish:
+    name: Cargo Publish
+    needs: test
+    steps:
+      - uses: actions-rs/cargo@v1
+        with:
+          command: test
+          args: ${{ secrets.CRATES_TOKEN }}
