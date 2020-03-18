@@ -4,8 +4,13 @@ Just call a macro or two and it's up and running!
 
 If you do want a more fleshed out CLI crate, you should check out 
 [clap](https://crates.io/crates/clap).
+# how to use
+**ezcli** is pretty easy to use and nothing too crazy is happening.
+Using *flag!*, *option!*, or their *named* variants will allow for them to be passed 
+as CLI args and it even creates a nifty little variable for you to use once the macro 
+has been called.
 
-# flag
+## flag
 Command line argument for a boolean state. The `flag!` macro only requires a variable
 name. Once, invoked a variable of the passed name is created and it will check the
 command line for matching flags.
@@ -19,7 +24,7 @@ if my_boolean { // "--my_boolean" exists in arguments
 }
 ```
 
-# option
+## option
 Command line argument for an optional parameter. The `option!` macro requires a
 variable name, like `flag!`, and makes it available to the scope. The value of the
 new variable will be a `Some`, unless it is not provided then it'll be `None`.
@@ -34,7 +39,7 @@ match my_arg {
 }
 ```
 
-# named_flag
+## named_flag
 Command line argument mimicking the behaviour of the `flag!` macro. The only
 difference is that it accepts a `Name`, which will make short and long CLI names.
 ```rust
@@ -44,7 +49,7 @@ use ezcli::{named_flag, name::Name};
 named_flag!(my_boolean, Name::new("my-boolean", "b")); 
 ```
 
-# named_option
+## named_option
 Like how the `flag!` and `named_flag!` macros are similar, this one is a nameable
 version of the `option!` macro. 
 ```rust

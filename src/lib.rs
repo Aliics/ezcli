@@ -8,6 +8,8 @@ pub mod name;
 /// ```
 /// use ezcli::flag;
 ///
+/// // accepts "--my_boolean"
+/// // if passed in, "my_boolean" is true
 /// flag!(my_boolean);
 /// ```
 /// In some case of not wanting to use the program's environment arguments
@@ -16,6 +18,9 @@ pub mod name;
 /// use ezcli::flag;
 ///
 /// let args = ["--my_boolean"];
+///
+/// // accepts "--my_boolean"
+/// // if passed in, "my_boolean" is true
 /// flag!(my_boolean, args);
 /// ```
 /// If the command line argument name should be different to the variable name
@@ -46,6 +51,8 @@ macro_rules! flag {
 /// ```
 /// use ezcli::option;
 ///
+/// // accepts "--my_option"
+/// // "my_option" will be an Option<String>
 /// option!(my_option);
 /// ```
 /// In some case of not wanting to use the program's environment arguments
@@ -54,6 +61,9 @@ macro_rules! flag {
 /// use ezcli::option;
 ///
 /// let args = ["--my_option", "value"];
+///
+/// // accepts "--my_option"
+/// // "my_option" will be an Option<String>
 /// option!(my_option, args);
 /// ```
 #[macro_export]

@@ -57,8 +57,8 @@ impl Name {
 /// ```
 /// use ezcli::{named_flag, name::Name};
 ///
-/// // Macro creates variable called my_flag.
-/// // Accepts --cool-flag to be passed via CLI.
+/// // accepts "--cool-flag"
+/// // if passed in, "my_flag" will be true
 /// named_flag!(my_flag, Name::long("cool-flag"));
 /// ```
 /// Also allows for a slice of args to be passed in.
@@ -67,6 +67,8 @@ impl Name {
 ///
 /// let args = ["f"];
 ///
+/// // accepts "-f"
+/// // if passed in, "flag" will be true
 /// named_flag!(flag, Name::short("f"));
 /// ```
 ///
@@ -95,6 +97,8 @@ macro_rules! named_flag {
 /// ```
 /// use ezcli::{named_option, name::Name};
 ///
+/// // accepts "--amazing-option"
+/// // "my_option" is now an Option<String> of the value passed in
 /// named_option!(my_option, Name::long("amazing-option"));
 /// ```
 /// In some case of not wanting to use the program's environment arguments
@@ -102,8 +106,11 @@ macro_rules! named_flag {
 /// ```
 /// use ezcli::{named_option, name::Name};
 ///
-/// let args = ["-s", "value"];
-/// named_option!(my_option, Name::new("accepts-both", "s"), args);
+/// let args = ["-b", "value"];
+///
+/// // accepts "--accepts-both" or "-b"
+/// // "my_option" is now an Option<String> of the value passed in
+/// named_option!(my_option, Name::new("accepts-both", "b"), args);
 /// ```
 #[macro_export]
 macro_rules! named_option {
