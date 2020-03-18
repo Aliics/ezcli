@@ -12,10 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions-rs/cargo@v1
+        name: Build
         with:
           command: build
           args: --release
       - uses: actions-rs/cargo@v1
+        name: Test
         with:
           command: test
   publish:
@@ -23,6 +25,7 @@ jobs:
     needs: test
     steps:
       - uses: actions-rs/cargo@v1
+        name: Publish
         with:
           command: test
           args: ${{ secrets.CRATES_TOKEN }}
