@@ -46,6 +46,15 @@ fn should_return_some_when_argument_when_short_named_is_provided() {
 }
 
 #[test]
+fn should_return_some_when_argument_when_short_named_is_provided_on_name_accepting_either() {
+    let args = ["-g", "alfie"];
+
+    named_option!(bunny, Name::new("good-boy", "g"), args);
+
+    assert_eq!("alfie", bunny.unwrap());
+}
+
+#[test]
 fn should_return_none_when_no_named_argument_given() {
     named_option!(bunny, Name::long("alfie"));
 

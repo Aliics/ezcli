@@ -37,6 +37,15 @@ fn should_enable_flag_of_long_and_short_named_arg() {
 }
 
 #[test]
+fn should_enable_flag_of_short_named_arg() {
+    let args = ["-b"];
+
+    named_flag!(both_named_boolean, Name::new("dont-use-me", "b"), args);
+
+    assert!(both_named_boolean);
+}
+
+#[test]
 fn should_not_enable_flag_of_long_and_short_named_arg_not_given() {
     named_flag!(not_enabled, Name::new("both-named-arg", "b"));
 

@@ -125,15 +125,8 @@ macro_rules! named_option {
 pub fn _named_flag(name: Name, args: &[String]) -> bool {
     args.iter()
         .find(|s| {
-            if name.long.is_some() {
-                return **s == format!("--{}", name.long.clone().unwrap());
-            }
-
-            if name.short.is_some() {
-                return **s == format!("-{}", name.short.clone().unwrap());
-            }
-
-            false
+            **s == format!("--{}", name.long.clone().unwrap_or_default())
+                || **s == format!("-{}", name.short.clone().unwrap_or_default())
         })
         .is_some()
 }
