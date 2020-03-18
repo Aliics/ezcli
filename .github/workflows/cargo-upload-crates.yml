@@ -30,4 +30,4 @@ jobs:
         name: Publish
         with:
           command: publish
-          args: ${{ secrets.CRATES_TOKEN }}
+          args: --token ${{ secrets.CRATES_TOKEN }}
