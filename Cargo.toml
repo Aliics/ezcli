@@ -3,6 +3,7 @@ name = "ezcli"
 version = "0.3.3"
 authors = ["Alexander Johnston <Aliics@hotmail.com>"]
 edition = "2018"
+exclude = [".github/"]
 repository = "https://github.com/Aliics/ezcli"
 keywords = ["cli", "argument", "arg"]
 categories = ["command-line-interface"]

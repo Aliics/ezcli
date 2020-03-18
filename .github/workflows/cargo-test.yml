@@ -1,0 +1,22 @@
+name: Cargo Test
+
+on:
+  push:
+    branches-ignore:
+      - master
+
+jobs:
+  test:
+    name: Cargo Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/cargo@v1
+        name: Build
+        with:
+          command: build
+          args: --release
+      - uses: actions-rs/cargo@v1
+        name: Test
+        with:
+          command: test

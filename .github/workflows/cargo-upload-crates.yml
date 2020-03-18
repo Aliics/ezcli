@@ -1,0 +1,31 @@
+name: Cargo Upload to Crates.io
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  test:
+    name: Cargo Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions-rs/cargo@v1
+        name: Build
+        with:
+          command: build
+          args: --release
+      - uses: actions-rs/cargo@v1
+        name: Test
+        with:
+          command: test
+  publish:
+    name: Cargo Publish
+    needs: test
+    steps:
+      - uses: actions-rs/cargo@v1
+        name: Publish
+        with:
+          command: test
+          args: ${{ secrets.CRATES_TOKEN }}
