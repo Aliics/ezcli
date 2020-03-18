@@ -29,5 +29,5 @@ jobs:
       - uses: actions-rs/cargo@v1
         name: Publish
         with:
-          command: test
+          command: publish
           args: ${{ secrets.CRATES_TOKEN }}
