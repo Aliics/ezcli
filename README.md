@@ -6,32 +6,44 @@ If you do want a more fleshed out CLI crate, you should check out
 [clap](https://crates.io/crates/clap).
 # how to use
 **ezcli** is pretty easy to use and nothing too crazy is happening.
-Using *flag!*, *option!*, or their *named* variants will allow for them to be passed 
+Using *flag!* or *option!* will allow for them to be passed 
 as CLI args and it even creates a nifty little variable for you to use once the macro 
-has been called.
+has been called. **Note** that the macros will replace underscores (_) with hyphens (-) in the arguments name.
 
 ## flag
 Command line argument for a boolean state. The `flag!` macro only requires a variable
-name. Once, invoked a variable of the passed name is created and it will check the
-command line for matching flags.
+name. Once invoked, it will check the command line arguments for a matching flag.
+Optionally, passing the keyword `let` will create a variable with the same name as the flag.
 ```rust
 use ezcli::flag;
 
-flag!(my_boolean);
+if flag!(--my_boolean) { // "--my-boolean" exists in arguments
+    // do stuff because flag is given
+}
 
-if my_boolean { // "--my_boolean" exists in arguments
+// OR
+
+flag!(let --my_boolean);
+
+if my_boolean { // "--my-boolean" exists in arguments
     // do stuff because flag is given
 }
 ```
 
 ## option
 Command line argument for an optional parameter. The `option!` macro requires a
-variable name, like `flag!`, and makes it available to the scope. The value of the
-new variable will be a `Some`, unless it is not provided then it'll be `None`.
+variable name, like `flag!`, and will create a variable if `let` is included. The value will be the next argument wrapped in a `Some`, unless it is not provided then it'll be `None`. 
 ```rust
 use ezcli::option;
 
-option!(my_arg);
+match option!(--my_arg) {
+    Some(x) => {}, // use x
+    None => {}, // handle no value
+}
+
+// OR 
+
+option!(let --my_arg);
 
 match my_arg {
     Some(x) => {}, // use x
@@ -39,22 +51,26 @@ match my_arg {
 }
 ```
 
-## named_flag
-Command line argument mimicking the behaviour of the `flag!` macro. The only
-difference is that it accepts a `Name`, which will make short and long CLI names.
+## Short- and Long-name arguments
+A command line argument can be in short-name (indicated by 1 hyphen: -a) or long-name (indicated by 2 hyphens: --arg). This applies to both `flag!` and `option!`.
 ```rust
-use ezcli::{named_flag, name::Name};
+use ezcli::{flag, option};
 
-// --my-boolean and -b are accepted
-named_flag!(my_boolean, Name::new("my-boolean", "b")); 
+if flag!(-f, --flag) { // "-f" or "--flag" exists in arguments
+    
+}
+
+match option!(-a, --arg) { // "-a" or "--arg" exists in arguments
+    Some(x) => {},
+    None => {},
+}
+
+// OR
+
+let my_flag = flag!(-f, --flag);
+...
 ```
 
-## named_option
-Like how the `flag!` and `named_flag!` macros are similar, this one is a nameable
-version of the `option!` macro. 
-```rust
-use ezcli::{named_option, name::Name};
+<hr>
 
-// --my-option and -o are accepted
-named_option!(my_option, Name::new("my-option", "o"));
-```
+See [flag](tests/boolean_flag.rs) and [option](tests/optional_args.rs) tests for more detailed examples.
