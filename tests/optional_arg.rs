@@ -1,4 +1,4 @@
-use ezcli::{option/*, name::Name, named_option*/};
+use ezcli::option;
 
 #[test]
 fn should_return_some_when_argument_provided() {

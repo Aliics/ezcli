@@ -1,4 +1,4 @@
-use ezcli::{flag/*, name::Name, named_flag*/};
+use ezcli::flag;
 
 #[test]
 fn should_enable_boolean_flag_when_arg_given() {
