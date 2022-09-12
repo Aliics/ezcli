@@ -4,14 +4,14 @@
 /// hyphens (e.g.: `flag!(--my_arg)`.
 /// -> `"--my-arg"`)
 /// ```
-/// use ezcli::args;
+/// use ezcli::arg;
 /// 
 /// // Flag (boolean) arguments
-/// args!(-a, --my_arg: "Description");
+/// arg!(-a, --my_arg: "Description");
 /// // Option arguments
-/// args!(-a, --my_arg <VALUE>: "Description");
+/// arg!(-a, --my_arg <VALUE>: "Description");
 /// // Option arguments with specific possible values
-/// args!(-a, --my_arg [V|VAL|VALUE]: "Description");
+/// arg!(-a, --my_arg [V|VAL|VALUE]: "Description");
 /// ```
 macro_rules! arg {
     // Flags (booleans)
