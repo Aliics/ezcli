@@ -5,7 +5,7 @@
 /// -> `"--my-arg"`)
 /// ```
 /// use ezcli::arg;
-/// 
+///
 /// // Flag (boolean) arguments
 /// arg!(-a, --my_arg: "Description");
 /// // Option arguments
@@ -14,7 +14,6 @@
 /// arg!(-a, --my_arg [V|VAL|VALUE]: "Description");
 /// ```
 macro_rules! arg {
-    // Flags (booleans)
     (-$short_arg:tt: $desc:expr) => {
         println!("-{}:\n    {}", stringify!($short_arg), $desc)
     };
@@ -25,7 +24,6 @@ macro_rules! arg {
         println!("-{}, --{}:\n    {}", stringify!($short_arg), stringify!($long_arg).replace('_', "-"), $desc)
     };
 
-    // Arguments with any value
     (-$short_arg:tt <$val:tt>: $desc:expr) => {
         println!("-{} <{}>:\n    {}", stringify!($short_arg), stringify!($val), $desc)
     };
@@ -36,7 +34,6 @@ macro_rules! arg {
         println!("-{}, --{} <{}>:\n    {}", stringify!($short_arg), stringify!($long_arg).replace('_', "-"), stringify!($val), $desc)
     };
 
-    // Arguments with specific optional values
     (-$short_arg:tt [$( $opt_val:tt )|*]: $desc:expr) => {
         print!("-{} [", stringify!($short_arg));
         $(
