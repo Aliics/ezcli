@@ -1,6 +1,6 @@
 [package]
 name = "ezcli"
-version = "0.3.4"
+version = "0.4.0"
 authors = ["Alexander Johnston <Aliics@hotmail.com>"]
 edition = "2018"
 exclude = [".github/"]
@@ -9,4 +9,4 @@ keywords = ["cli", "argument", "arg"]
 categories = ["command-line-interface"]
 description = "Easy CLI crate for Rust"
 readme = "README.md"
-license = "MIT OR Apache-2.0" # I don't know anything about licenses... help.
+license = "MIT OR Apache-2.0"
